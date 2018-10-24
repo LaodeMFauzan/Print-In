@@ -8,6 +8,6 @@
     <color name="whiteColor">#fff</color>
     <color name="bg_login">	#00aced</color>
     <color name="box_login">#c0deed</color>
-    <color name="btn_login">#1dcaff</color>
+    <color name="btn_login">#ff7400</color>
     <color name="bg_profile">#00aced</color>
 </resources>
