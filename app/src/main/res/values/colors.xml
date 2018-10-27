@@ -10,5 +10,5 @@
     <color name="box_login">#8ac3cc</color>
     <color name="btn_login">#ff7400</color>
     <color name="btn_register">#158799</color>
-    <color name="bg_profile">#00aced</color>
+    <color name="background_all">#d1d1d1</color>
 </resources>
