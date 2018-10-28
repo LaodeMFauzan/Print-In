@@ -11,4 +11,6 @@
     <color name="btn_login">#ff7400</color>
     <color name="btn_register">#158799</color>
     <color name="background_all">#d1d1d1</color>
+    <color name="custom_et">#EBEBEB</color>
+    <color name="hint_color">#7D7D7D</color>
 </resources>
