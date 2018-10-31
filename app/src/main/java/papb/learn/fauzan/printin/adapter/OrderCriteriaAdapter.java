@@ -1,27 +1,46 @@
 package papb.learn.fauzan.printin.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
-public class OrderCriteriaAdapter extends RecyclerView.Adapter {
+import java.util.ArrayList;
 
+import papb.learn.fauzan.printin.model.OrderCriteriaModel;
 
-    public OrderCriteriaAdapter(String[] dataSet) {
+public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdapter.ViewHolder> {
 
+    private ArrayList<OrderCriteriaModel> orderCriteriaModel;
+
+    public OrderCriteriaAdapter(ArrayList<OrderCriteriaModel> dataSet) {
+        this.orderCriteriaModel = dataSet;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderCriteriaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(OrderCriteriaAdapter.ViewHolder holder, int position) {
 
     }
 
+
     @Override
     public int getItemCount() {
-        return 0;
+        return orderCriteriaModel.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+        }
     }
 }

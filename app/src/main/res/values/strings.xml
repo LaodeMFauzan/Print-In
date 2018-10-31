@@ -5,4 +5,8 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
+    <string name="file_name">File Name</string>
+    <string name="color_monochrome">Hitam-Putih</string>
+    <string name="color_colored">Warna</string>
+    <string name="binded">Jilid</string>
 </resources>
