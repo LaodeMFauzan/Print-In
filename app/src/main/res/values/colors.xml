@@ -13,4 +13,5 @@
     <color name="background_all">#d1d1d1</color>
     <color name="custom_et">#EBEBEB</color>
     <color name="hint_color">#7D7D7D</color>
+    <color name="item_file_criteria">#E8E8E8</color>
 </resources>
