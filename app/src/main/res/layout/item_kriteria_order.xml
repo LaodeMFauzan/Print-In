@@ -50,6 +50,17 @@
                 android:text="@string/color_monochrome" />
         </RadioGroup>
 
+        <Spinner
+            android:id="@+id/sp_paper_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.005"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/sp_front_bind"
+            app:layout_constraintTop_toBottomOf="@id/rg_color_choice"
+            app:layout_constraintVertical_bias="0.333" />
+
         <CheckBox
             android:id="@+id/cb_is_binded"
             android:layout_width="wrap_content"
