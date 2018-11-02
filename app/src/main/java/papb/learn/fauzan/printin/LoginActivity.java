@@ -31,6 +31,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 this.startActivityForResult(toRegister,reqCode);
                 break;
 
+            case R.id.btn_login:
+                Intent toOrderCriteriaTemp = new Intent(this,OrderCriteriaActivity.class);
+                startActivity(toOrderCriteriaTemp);
+                break;
+
         }
     }
 
