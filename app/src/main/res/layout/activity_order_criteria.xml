@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="8dp">
+    <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_order_criteria"
-        android:scrollbars="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_order_criteria"
+            android:scrollbars="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/btn_simpan_kriteria"/>
 
-    <Button
-        android:id="@+id/btn_simpan_kriteria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/next"
-        android:layout_margin="8dp"
-        android:background="@drawable/custom_btn_next" />
+        <Button
+            android:id="@+id/btn_simpan_kriteria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rv_order_criteria"
+            android:text="@string/next"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_btn_next" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

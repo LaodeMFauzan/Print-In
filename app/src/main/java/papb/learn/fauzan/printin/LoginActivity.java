@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_register;
+    private Button btn_login;
     int reqCode = 99;
 
     private String name,email,password;
@@ -20,7 +21,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         tv_register = findViewById(R.id.tv_register);
+        btn_login = findViewById(R.id.btn_login);
+
         tv_register.setOnClickListener(this);
+        btn_login.setOnClickListener(this);
     }
 
     @Override
