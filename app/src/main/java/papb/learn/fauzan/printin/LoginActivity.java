@@ -10,6 +10,10 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_register;
+    private Button btn_login;
+    int reqCode = 99;
+
+    private String name,email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,17 +21,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         tv_register = findViewById(R.id.tv_register);
+        btn_login = findViewById(R.id.btn_login);
+
         tv_register.setOnClickListener(this);
+        btn_login.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_register :
-                Intent i = new Intent(this,RegisterActivity.class);
-                startActivity(i);
+                Intent toRegister = new Intent(this,RegisterActivity.class);
+                this.startActivityForResult(toRegister,reqCode);
                 break;
 
+            case R.id.btn_login:
+                Intent toOrderCriteriaTemp = new Intent(this,OrderCriteriaActivity.class);
+                startActivity(toOrderCriteriaTemp);
+                break;
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == reqCode){
+            if (resultCode == RESULT_OK){
+                name = data.getStringExtra("username");
+                email = data.getStringExtra("email");
+                password = data.getStringExtra("password");
+            }
         }
     }
 }
