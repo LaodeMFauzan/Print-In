@@ -10,6 +10,9 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_register;
+    int reqCode = 99;
+
+    private String name,email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +27,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_register :
-                Intent i = new Intent(this,RegisterActivity.class);
-                startActivity(i);
+                Intent toRegister = new Intent(this,RegisterActivity.class);
+                this.startActivityForResult(toRegister,reqCode);
                 break;
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == reqCode){
+            if (resultCode == RESULT_OK){
+                name = data.getStringExtra("username");
+                email = data.getStringExtra("email");
+                password = data.getStringExtra("password");
+            }
         }
     }
 }
