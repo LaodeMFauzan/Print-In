@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/rv_order_criteria"
             android:text="@string/next"
+            android:textColor="@color/whiteColor"
             android:layout_margin="8dp"
             android:background="@drawable/custom_btn_next" />
 

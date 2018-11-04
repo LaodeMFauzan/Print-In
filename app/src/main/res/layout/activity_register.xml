@@ -32,6 +32,7 @@
         android:background="@drawable/custom_edit_text"
         android:hint="@string/username"
         android:drawableLeft="@drawable/ic_username"
+        android:drawablePadding="8dp"
         android:padding="8dp"
         android:inputType="textEmailAddress"
         android:textColor="@color/hint_color"
