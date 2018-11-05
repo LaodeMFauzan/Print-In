@@ -11,4 +11,8 @@
     <string name="binded">Jilid</string>
     <string name="next">Lanjut</string>
     <string name="title_activity_order_maps">Lokasi Antar</string>
+    <string name="distance">Distance</string>
+    <string name="delivery_fee">Delivery Fee</string>
+    <string name="distance_value">3 km</string>
+    <string name="delivery_fee_value">Rp. 3000</string>
 </resources>

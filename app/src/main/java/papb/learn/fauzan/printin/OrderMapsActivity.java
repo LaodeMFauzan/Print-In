@@ -37,7 +37,7 @@ import java.util.List;
 
 import papb.learn.fauzan.printin.parser.JSONParserTask;
 
-public class OrderMapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private LatLng delhi = new LatLng(28.6139, 77.2090);

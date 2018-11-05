@@ -97,6 +97,8 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
             sp_front_bind = itemView.findViewById(R.id.sp_front_bind);
             sp_back_bind = itemView.findViewById(R.id.sp_back_bind);
 
+            rb_colored.setChecked(true);
+
             itemView.setOnClickListener(this);
         }
 
