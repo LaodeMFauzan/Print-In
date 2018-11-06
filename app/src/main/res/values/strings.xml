@@ -15,4 +15,10 @@
     <string name="delivery_fee">Delivery Fee</string>
     <string name="distance_value">3 km</string>
     <string name="delivery_fee_value">Rp. 3000</string>
+    <string name="default_adress">Jalan Veteran No.12,Ketawanggede,Lowokwaru,Malang</string>
+    <string name="default_distance">3 km</string>
+    <string name="default_shipping_fee">Rp. 2000</string>
+    <string name="label_shipping_to">Shipping To</string>
+    <string name="default_customer_name">Channarong Kiet</string>
+    <string name="label_order_summary">Order Summary</string>
 </resources>
