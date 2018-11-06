@@ -5,4 +5,8 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="username">Username</string>
+    <string name="buat_order">Buat Order</string>
+    <string name="order_kosong">Order Kosong!</string>
+    <string name="segera_buat_order_dan_kirim_ketempat_anda">Segera buat order dan kirim ketempat Anda</string>
+    <string name="tambah_file">Tambah File</string>
 </resources>
