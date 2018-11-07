@@ -48,10 +48,8 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
     @Override
     public void onBindViewHolder(@NonNull OrderCriteriaAdapter.ViewHolder holder, int position) {
         holder.tv_file_name.setText(orderCriteriaModelList.get(position).getFileName());
-        if(orderCriteriaModelList.get(position).isColored()){
+        if(!orderCriteriaModelList.get(position).isColored()){
             holder.rb_colored.setActivated(true);
-        } else {
-            holder.rb_monochrome.setActivated(true);
         }
         holder.cb_bind.setActivated(orderCriteriaModelList.get(position).isBinded());
 
@@ -77,11 +75,11 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView tv_file_name;
-        RadioButton rb_colored,rb_monochrome;
+        private TextView tv_file_name;
+        private RadioButton rb_colored,rb_monochrome;
 
-        CheckBox cb_bind;
-        Spinner sp_bind_type,sp_front_bind,sp_back_bind,sp_paper_type;
+        private CheckBox cb_bind;
+        private Spinner sp_bind_type,sp_front_bind,sp_back_bind,sp_paper_type;
 
         public ViewHolder(View itemView) {
             super(itemView);

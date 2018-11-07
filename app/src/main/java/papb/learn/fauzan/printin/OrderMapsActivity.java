@@ -1,6 +1,7 @@
 package papb.learn.fauzan.printin;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -37,11 +40,13 @@ import java.util.List;
 
 import papb.learn.fauzan.printin.parser.JSONParserTask;
 
-public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     private LatLng delhi = new LatLng(28.6139, 77.2090);
     private LatLng chandigarh = new LatLng(30.7333, 76.7794);
+
+    private Button btn_simpan_lokasi_kirim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,19 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
             }
         });
+
+        btn_simpan_lokasi_kirim = findViewById(R.id.btn_simpan_lokasi_kirim);
+        btn_simpan_lokasi_kirim.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_simpan_lokasi_kirim:
+                Intent toOrderSummary = new Intent(this,OrderSummaryActivity.class);
+                startActivity(toOrderSummary);
+                break;
+        }
     }
 
     private class FetchUrl extends AsyncTask<String, Void, String> {
