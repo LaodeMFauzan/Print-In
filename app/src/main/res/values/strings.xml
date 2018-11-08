@@ -24,4 +24,7 @@
     <string name="paper_type_default">A4-70gram</string>
     <string name="front_bind_default">Transparan</string>
     <string name="back_bind_default">Biru</string>
+    <string name="default_type_bind">Lakban Hitam</string>
+    <string name="total_cost">Total Biaya : 12.000</string>
+    <string name="default_total_page">12 Halaman</string>
 </resources>
