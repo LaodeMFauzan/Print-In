@@ -1,12 +1,12 @@
-package papb.learn.fauzan.printin.Entity;
+package papb.learn.fauzan.printin.model;
 
 import java.util.Date;
 
-public class Order {
+public class OrderModel {
     private String dokumen;
     private String tanggal;
 
-    public Order(String dokumen, String tanggal) {
+    public OrderModel(String dokumen, String tanggal) {
         this.dokumen = dokumen;
         this.tanggal = tanggal;
     }

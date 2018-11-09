@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText et_username,et_email,et_password;
     private Button btn_register;
+    private ProgressBar pb_register;
 
     private FirebaseAuth mAuth;
 
@@ -36,6 +38,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(this);
+
+        pb_register = findViewById(R.id.pb_register);
+        pb_register.setVisibility(View.INVISIBLE);
+        pb_register.setIndeterminate(true);
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -58,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void createUser(){
+        pb_register.setVisibility(View.VISIBLE);
         String email_register = et_email.getText().toString();
         String password_register = et_password.getText().toString();
 
@@ -69,10 +76,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            pb_register.setVisibility(View.GONE);
                             Log.d(TAG_SUCCESS_CREATE,"createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                         } else {
+                            pb_register.setVisibility(View.GONE);
                             Log.w(TAG_FAILED_CREATE,"createUserWithEmail:failure",task.getException());
                             Toast.makeText(RegisterActivity.this,"Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

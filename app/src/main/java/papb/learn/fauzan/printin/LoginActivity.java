@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_register;
     private Button btn_login;
     private EditText et_email_login,et_password_login;
+    private ProgressBar pb_login;
     int reqCode = 99;
 
     private FirebaseAuth mAuth;
@@ -40,6 +42,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_login = findViewById(R.id.btn_login);
         et_email_login = findViewById(R.id.et_email_login);
         et_password_login = findViewById(R.id.et_password_login);
+        pb_login = findViewById(R.id.pb_login);
+
+        pb_login.setVisibility(View.INVISIBLE);
+        pb_login.setIndeterminate(true);
 
         tv_register.setOnClickListener(this);
         btn_login.setOnClickListener(this);
@@ -70,6 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btn_login:
+                pb_login.setVisibility(View.VISIBLE);
 //                Intent toOrderCriteriaTemp = new Intent(this,OrderCriteriaActivity.class);
 //                startActivity(toOrderCriteriaTemp);
                 email = et_email_login.getText().toString();
@@ -80,10 +87,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
+                                    pb_login.setVisibility(View.GONE);
                                     Log.d(TAG_LOGIN_SUCCESS,"createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
                                 } else {
+                                    pb_login.setVisibility(View.GONE);
                                     Log.w(TAG_LOGIN_FAILED,"createUserWithEmail:failure",task.getException());
                                     Toast.makeText(LoginActivity.this,"Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
