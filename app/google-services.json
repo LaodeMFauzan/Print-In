@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "919046722291",
+    "firebase_url": "https://print-in-a8edb.firebaseio.com",
+    "project_id": "print-in-a8edb",
+    "storage_bucket": "print-in-a8edb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919046722291:android:e32b6c7f30c45e20",
+        "android_client_info": {
+          "package_name": "papb.learn.fauzan.printin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919046722291-4u3nisks42omonhne5am8ru1lk9l082m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "papb.learn.fauzan.printin",
+            "certificate_hash": "0a58071fb99dc1a6edba4efddc10fc894dcb91cd"
+          }
+        },
+        {
+          "client_id": "919046722291-fltc9lcjooakd1nes6o860i3ji24nos4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK0c4ajiwsrdF88ZCbgbCmjKYnV8-_qcQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919046722291-fltc9lcjooakd1nes6o860i3ji24nos4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
