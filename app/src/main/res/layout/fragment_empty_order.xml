@@ -9,7 +9,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/empty_order_bg"
+
         android:scaleType="centerCrop"/>
 
     <android.support.constraint.ConstraintLayout

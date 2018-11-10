@@ -4,6 +4,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+
     <string name="username">Username</string>
     <string name="buat_order">Buat Order</string>
     <string name="order_kosong">Order Kosong!</string>
@@ -31,4 +32,6 @@
     <string name="default_type_bind">Lakban Hitam</string>
     <string name="total_cost">Total Biaya : 12.000</string>
     <string name="default_total_page">12 Halaman</string>
+    <string name="just_login">Already have an account? <font color='#01C6DB'>Login</font></string>
+    <string name="just_register">Don\'t have an account ? <font color='#01C6DB'>Register</font></string>
 </resources>

@@ -6,10 +6,10 @@
 
     <color name="blackColor">#000</color>
     <color name="whiteColor">#fff</color>
-    <color name="bg_login">	#00aced</color>
-    <color name="btn_login">#ff7400</color>
-    <color name="btn_register">#158799</color>
-    <color name="background_all">#d1d1d1</color>
+    <color name="bg_tv_link">	#00aced</color>
+    <color name="btn_login">#FF0048</color>
+    <color name="btn_register">#FF0048</color>
+    <color name="background_all">#DBDBDB</color>
     <color name="custom_et">#EBEBEB</color>
     <color name="hint_color">#7D7D7D</color>
     <color name="bg_color">#DBDBDB</color>
