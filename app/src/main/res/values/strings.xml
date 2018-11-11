@@ -34,4 +34,5 @@
     <string name="default_total_page">12 Halaman</string>
     <string name="just_login">Already have an account? <font color='#01C6DB'>Login</font></string>
     <string name="just_register">Don\'t have an account ? <font color='#01C6DB'>Register</font></string>
+    <string name="upload_file">Upload File</string>
 </resources>

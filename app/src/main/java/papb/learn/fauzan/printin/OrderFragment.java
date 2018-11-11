@@ -1,5 +1,6 @@
 package papb.learn.fauzan.printin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements View.OnClickListener {
+
+    private FloatingActionButton myFab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,12 +23,22 @@ public class OrderFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FloatingActionButton myFab = view.findViewById(R.id.floatingActionButton);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Snackbar", Snackbar.LENGTH_LONG).show();
-            }
-        });
+        myFab = view.findViewById(R.id.floatingActionButton);
+//        myFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Snackbar", Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+        myFab.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.floatingActionButton:
+                Intent toUploadFile = new Intent(this.getContext(),UploadFileActivity.class);
+                startActivity(toUploadFile);
+        }
     }
 }

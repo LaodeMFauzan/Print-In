@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText et_username,et_email,et_password;
+    private TextView tv_login;
     private Button btn_register;
     private ProgressBar pb_register;
 
@@ -35,6 +38,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         et_username = findViewById(R.id.et_username);
         et_email = findViewById(R.id.et_email_register);
         et_password = findViewById(R.id.et_password_register);
+
+        tv_login = findViewById(R.id.tv_login);
+        tv_login.setOnClickListener(this);
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(this);
@@ -57,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null){
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Intent toLoginActivity = getIntent();
             setResult(RESULT_OK,toLoginActivity);
             finish();
@@ -65,30 +72,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void createUser(){
         pb_register.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
         String email_register = et_email.getText().toString();
         String password_register = et_password.getText().toString();
 
         final String TAG_SUCCESS_CREATE = "SUCCESS";
         final String TAG_FAILED_CREATE = "ERROR";
-
-        mAuth.createUserWithEmailAndPassword(email_register,password_register)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            pb_register.setVisibility(View.GONE);
-                            Log.d(TAG_SUCCESS_CREATE,"createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            pb_register.setVisibility(View.GONE);
-                            Log.w(TAG_FAILED_CREATE,"createUserWithEmail:failure",task.getException());
-                            Toast.makeText(RegisterActivity.this,"Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+        try {
+            mAuth.createUserWithEmailAndPassword(email_register, password_register)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                pb_register.setVisibility(View.GONE);
+                                Log.d(TAG_SUCCESS_CREATE, "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                            } else {
+                                pb_register.setVisibility(View.GONE);
+                                Log.w(TAG_FAILED_CREATE, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
                         }
-                    }
-                });
+                    });
+        } catch (IllegalArgumentException e){
+            Toast.makeText(RegisterActivity.this,"Field can't be empty.",
+                    Toast.LENGTH_SHORT).show();
+            pb_register.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -96,6 +113,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.btn_register:
                 createUser();
+                break;
+            case R.id.tv_login:
+                Intent toLoginActivity = getIntent();
+                setResult(RESULT_OK,toLoginActivity);
+                finish();
+                break;
         }
     }
 }
