@@ -22,7 +22,7 @@
         android:elevation="1dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/iv_file_icon"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
             tools:srcCompat="@drawable/upload_doc" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_upload_nama_file"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
@@ -46,28 +46,28 @@
             android:text="Dokumen"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_tipe_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:text="Tipe File"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_upload_nama_file" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tv_ukuran_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:text="Ukuran File"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tipe_file" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

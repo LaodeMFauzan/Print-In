@@ -1,16 +1,18 @@
 package papb.learn.fauzan.printin;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -23,11 +25,22 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import papb.learn.fauzan.printin.adapter.FileUploadAdapter;
+import papb.learn.fauzan.printin.model.UploadFileModel;
+
 public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btn_upload_file,btn_select_file;
     private ProgressBar pb_upload_file;
     private StorageReference mStorageReference;
+
+    private RecyclerView rvFile;
+    private FileUploadAdapter adapterFile;
+    private RecyclerView.LayoutManager lmFileUpload;
+
 
 
     private Uri pdfUri;
@@ -46,6 +59,29 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         pb_upload_file.setVisibility(View.INVISIBLE);
 
         mStorageReference = FirebaseStorage.getInstance().getReference();
+
+        setRecyclerView();
+    }
+
+    private void setRecyclerView (){
+        rvFile = findViewById(R.id.rv_file);
+        rvFile.setHasFixedSize(true);
+
+        lmFileUpload = new LinearLayoutManager(this);
+        rvFile.setLayoutManager(lmFileUpload);
+
+        adapterFile = new FileUploadAdapter(getFileList(),this);
+        rvFile.setAdapter(adapterFile);
+    }
+
+    private ArrayList<UploadFileModel> getFileList()  {
+        ArrayList<UploadFileModel> uploadFileModels  = new ArrayList<>();
+        UploadFileModel FileModel = new UploadFileModel();
+//        FileModel.setNamaFile("Tes nama file");
+//        FileModel.setUkuranFile("3.3 Mb");
+        uploadFileModels.add(FileModel);
+
+        return uploadFileModels;
     }
 
     @Override
@@ -107,6 +143,22 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 86 && resultCode == RESULT_OK && data != null){
             pdfUri = data.getData();
+
+//            UploadFileModel FileModel;
+//
+//            try{
+//                FileModel = new UploadFileModel();
+//                FileModel.setUriFile(pdfUri);
+//                FileModel.setNamaFile(pdfUri.getPath());
+//                uploadFileModels.add(FileModel);
+//
+//                adapterFile = new FileUploadAdapter(uploadFileModels,this);
+//
+//                rvFile.setAdapter(adapterFile);
+//                Toast.makeText(UploadFileActivity.this, "Total = "+String.valueOf(uploadFileModels.size()), Toast.LENGTH_SHORT).show();
+//            } catch (Exception e){
+//                e.printStackTrace();
+//            }
         } else {
             Toast.makeText(UploadFileActivity.this,"please select a file...",Toast.LENGTH_SHORT).show();
         }
