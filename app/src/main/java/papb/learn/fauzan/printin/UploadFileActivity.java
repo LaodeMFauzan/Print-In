@@ -33,15 +33,13 @@ import papb.learn.fauzan.printin.model.UploadFileModel;
 
 public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btn_upload_file,btn_select_file;
+    private Button btn_upload_file,btn_select_file,btn_simpan_file;
     private ProgressBar pb_upload_file;
     private StorageReference mStorageReference;
 
     private RecyclerView rvFile;
     private FileUploadAdapter adapterFile;
     private RecyclerView.LayoutManager lmFileUpload;
-
-
 
     private Uri pdfUri;
 
@@ -52,13 +50,23 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
 
         btn_upload_file = findViewById(R.id.btn_upload_file);
         btn_select_file = findViewById(R.id.btn_select_file);
+        btn_simpan_file = findViewById(R.id.btn_simpan_file);
+
         btn_upload_file.setOnClickListener(this);
         btn_select_file.setOnClickListener(this);
+        btn_simpan_file.setOnClickListener(this);
 
         pb_upload_file = findViewById(R.id.pb_upload_file);
         pb_upload_file.setVisibility(View.INVISIBLE);
 
         mStorageReference = FirebaseStorage.getInstance().getReference();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         setRecyclerView();
     }
@@ -70,18 +78,9 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         lmFileUpload = new LinearLayoutManager(this);
         rvFile.setLayoutManager(lmFileUpload);
 
-        adapterFile = new FileUploadAdapter(getFileList(),this);
-        rvFile.setAdapter(adapterFile);
-    }
-
-    private ArrayList<UploadFileModel> getFileList()  {
-        ArrayList<UploadFileModel> uploadFileModels  = new ArrayList<>();
-        UploadFileModel FileModel = new UploadFileModel();
-//        FileModel.setNamaFile("Tes nama file");
-//        FileModel.setUkuranFile("3.3 Mb");
-        uploadFileModels.add(FileModel);
-
-        return uploadFileModels;
+        if(adapterFile != null){
+            rvFile.setAdapter(adapterFile);
+        }
     }
 
     @Override
@@ -103,6 +102,10 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     Toast.makeText(UploadFileActivity.this,"please select a file...",Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.btn_simpan_file:
+                Intent toCriteriaActivity = new Intent(this,OrderCriteriaActivity.class);
+                startActivity(toCriteriaActivity);
                 break;
         }
     }
@@ -143,22 +146,14 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 86 && resultCode == RESULT_OK && data != null){
             pdfUri = data.getData();
-
-//            UploadFileModel FileModel;
-//
-//            try{
-//                FileModel = new UploadFileModel();
-//                FileModel.setUriFile(pdfUri);
-//                FileModel.setNamaFile(pdfUri.getPath());
-//                uploadFileModels.add(FileModel);
-//
-//                adapterFile = new FileUploadAdapter(uploadFileModels,this);
-//
-//                rvFile.setAdapter(adapterFile);
-//                Toast.makeText(UploadFileActivity.this, "Total = "+String.valueOf(uploadFileModels.size()), Toast.LENGTH_SHORT).show();
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
+            try{
+                ArrayList<UploadFileModel> uploadFileModels  = new ArrayList<>();
+                UploadFileModel fileModel = new UploadFileModel();
+                adapterFile = new FileUploadAdapter(getFileList(uploadFileModels,fileModel),this);
+                Toast.makeText(UploadFileActivity.this, "Total = "+String.valueOf(uploadFileModels.size()), Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         } else {
             Toast.makeText(UploadFileActivity.this,"please select a file...",Toast.LENGTH_SHORT).show();
         }
@@ -171,5 +166,14 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         } else {
             Toast.makeText(UploadFileActivity.this,"please provide information...",Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private ArrayList<UploadFileModel> getFileList(ArrayList<UploadFileModel> uploadFileModels,UploadFileModel fileModel)  {
+        fileModel.setNamaFile(pdfUri.getPath());
+        fileModel.setUkuranFile("3.3 Mb");
+        uploadFileModels.add(fileModel);
+
+        return uploadFileModels;
     }
 }
