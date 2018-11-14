@@ -7,6 +7,15 @@ public class UploadFileModel {
 
     Uri uriFile;
 
+    public UploadFileModel() {
+    }
+
+    public UploadFileModel(String namaFile, String tipeFile, String ukuranFile) {
+        this.namaFile = namaFile;
+        this.tipeFile = tipeFile;
+        this.ukuranFile = ukuranFile;
+    }
+
     public String getNamaFile() {
         return namaFile;
     }

@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/upload_doc" />
+            tools:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
         <TextView
             android:id="@+id/tv_upload_nama_file"

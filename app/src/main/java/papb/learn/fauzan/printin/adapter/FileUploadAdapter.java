@@ -1,11 +1,13 @@
 package papb.learn.fauzan.printin.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class FileUploadAdapter extends RecyclerView.Adapter<FileUploadAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tv_file_name,tv_file_size,tv_type_file;
+        ImageView iv_img_file;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +61,7 @@ public class FileUploadAdapter extends RecyclerView.Adapter<FileUploadAdapter.Vi
             tv_file_name = itemView.findViewById(R.id.tv_upload_nama_file);
             tv_file_size = itemView.findViewById(R.id.tv_ukuran_file);
             tv_type_file = itemView.findViewById(R.id.tv_tipe_file);
+            iv_img_file = itemView.findViewById(R.id.iv_file_icon);
 
             itemView.setOnClickListener(this);
         }
