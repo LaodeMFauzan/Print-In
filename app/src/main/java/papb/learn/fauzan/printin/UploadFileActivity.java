@@ -78,7 +78,6 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-
         setRecyclerView();
     }
 

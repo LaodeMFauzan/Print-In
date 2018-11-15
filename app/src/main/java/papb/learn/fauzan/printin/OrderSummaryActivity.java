@@ -3,6 +3,8 @@ package papb.learn.fauzan.printin;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,11 +72,18 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_checkout_order:
+                Intent intent = new Intent(this,OrderListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+
                 notifyOrderBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
-                        .setContentTitle("Your order has been processed")
-                        .setContentText("Your order will arrive in 10 minutes")
+                        .setContentTitle(getString(R.string.order_diproses))
+                        .setContentText(getString(R.string.tekan_lihat_order))
                         .setSmallIcon(R.drawable.ic_local_shipping_black_24dp)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
                 Notification orderNotification = notifyOrderBuilder.build();
                 notifyOrderManager.notify(NOTIFICATION_ORDER_ID,orderNotification);
                 break;
