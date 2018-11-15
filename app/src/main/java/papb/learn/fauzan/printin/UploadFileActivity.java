@@ -53,6 +53,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     private RecyclerView.LayoutManager lmFileUpload;
 
     private Uri[] pdfUri;
+    ArrayList<UploadFileModel> uploadFileModels  = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +147,10 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         pb_upload_file.setProgress(0);
-                                        Toast.makeText(UploadFileActivity.this, "Upload file "+ indexFile+1 +" success...!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UploadFileActivity.this, "Upload file "+ indexFile +" success...!", Toast.LENGTH_SHORT).show();
                                     }
                                     else {
-                                        Toast.makeText(UploadFileActivity.this, "Upload file "+indexFile+1 +" failed !", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(UploadFileActivity.this, "Upload file "+indexFile +" failed !", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -174,38 +175,47 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 86 && resultCode == RESULT_OK && data != null){
-            ArrayList<UploadFileModel> uploadFileModels  = new ArrayList<>();
-            UploadFileModel fileModel;
-            if (data.getClipData() != null){
-                pdfUri = new Uri[data.getClipData().getItemCount()];
-                try{
-                    for(int i = 0; i < data.getClipData().getItemCount(); i++){
-                        fileModel = new UploadFileModel();
-                        String namaFile = getFileName(data.getClipData().getItemAt(i).getUri());
-                        fileModel.setNamaFile(namaFile);
-                        fileModel.setUkuranFile(String.valueOf(new File(data.getClipData().getItemAt(i).getUri().getPath()).length()));
-                        fileModel.setTipeFile(namaFile.substring(namaFile.lastIndexOf(".")));
-                        uploadFileModels.add(fileModel);
-                        pdfUri[i] = data.getClipData().getItemAt(i).getUri();
-                    }
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                }
 
+            UploadFileModel fileModel = new UploadFileModel();
+            if (data.getClipData() != null){
+                uploadMultipleFile(fileModel,data);
             } else {
-                pdfUri = new Uri[1];
-                fileModel = new UploadFileModel();
-                Uri pdfUriSingle =  data.getData();
-                String namaFile = getFileName(data.getData());
-                fileModel.setUkuranFile(String.valueOf(new File(data.getData().getPath()).length()));
-                fileModel.setTipeFile(namaFile.substring(namaFile.lastIndexOf(".")));
-                uploadFileModels.add(fileModel);
-                pdfUri[0] = pdfUriSingle;
+               uploadSingleFile(fileModel,data);
             }
             adapterFile = new FileUploadAdapter(uploadFileModels,this);
             Toast.makeText(UploadFileActivity.this, "Total = "+String.valueOf(uploadFileModels.size()), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(UploadFileActivity.this,"please select a file...",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadSingleFile(UploadFileModel fileModel,Intent data){
+        pdfUri = new Uri[1];
+        fileModel = new UploadFileModel();
+        Uri pdfUriSingle =  data.getData();
+        String namaFile = getFileName(data.getData());
+        fileModel.setUkuranFile(String.valueOf(new File(data.getData().getPath()).length()));
+        fileModel.setTipeFile(namaFile.substring(namaFile.lastIndexOf(".")));
+        uploadFileModels.add(fileModel);
+        pdfUri[0] = pdfUriSingle;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void uploadMultipleFile(UploadFileModel fileModel,Intent data){
+        pdfUri = new Uri[data.getClipData().getItemCount()];
+        try{
+            for(int i = 0; i < data.getClipData().getItemCount(); i++){
+                fileModel = new UploadFileModel();
+                String namaFile = getFileName(data.getClipData().getItemAt(i).getUri());
+                fileModel.setNamaFile(namaFile);
+                fileModel.setUkuranFile(String.valueOf(new File(data.getClipData().getItemAt(i).getUri().getPath()).length()));
+                fileModel.setTipeFile(namaFile.substring(namaFile.lastIndexOf(".")));
+                uploadFileModels.add(fileModel);
+                pdfUri[i] = data.getClipData().getItemAt(i).getUri();
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
     }
 
@@ -217,6 +227,8 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             Toast.makeText(UploadFileActivity.this,"please provide information...",Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     public String getFileName(Uri uri){
         String result = null;
