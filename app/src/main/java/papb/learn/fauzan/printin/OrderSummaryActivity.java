@@ -1,10 +1,16 @@
 package papb.learn.fauzan.printin;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -12,7 +18,9 @@ import java.util.ArrayList;
 import papb.learn.fauzan.printin.adapter.OrderSummaryAdapter;
 import papb.learn.fauzan.printin.model.OrderCriteriaModel;
 
-public class OrderSummaryActivity extends AppCompatActivity {
+public class OrderSummaryActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String CHANNEL_ID ="PRINTIN_ID_NOTIF_CHANNEL";
 
     private RecyclerView rvOrderSummary;
     private OrderSummaryAdapter orderSummaryAdapter;
@@ -20,10 +28,21 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     private Button btn_checkout_order;
 
+    private NotificationCompat.Builder notifyOrderBuilder;
+    private NotificationManager notifyOrderManager;
+    private static final int NOTIFICATION_ORDER_ID = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
+
+        createNotificationChannel();
+
+        btn_checkout_order = findViewById(R.id.btn_checkout_order);
+        btn_checkout_order.setOnClickListener(this);
+
+        notifyOrderManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         showListOrderSummary();
     }
@@ -42,10 +61,36 @@ public class OrderSummaryActivity extends AppCompatActivity {
     private ArrayList<OrderCriteriaModel> initializeOrderSummary() {
         ArrayList<OrderCriteriaModel> orderSummaryModels = new ArrayList<>();
         OrderCriteriaModel orderTest1 = new OrderCriteriaModel("Laporan Sisop","A4-80","Lakban","Transparan","Biru",true,true);
-        OrderCriteriaModel orderTest2 = new OrderCriteriaModel("Proposal Skripsi","A4-70","Lakban","Biru","Biru",false,true);
         orderSummaryModels.add(orderTest1);
-        orderSummaryModels.add(orderTest2);
 
         return orderSummaryModels;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_checkout_order:
+                notifyOrderBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
+                        .setContentTitle("Your order has been processed")
+                        .setContentText("Your order will arrive in 10 minutes")
+                        .setSmallIcon(R.drawable.ic_local_shipping_black_24dp)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                Notification orderNotification = notifyOrderBuilder.build();
+                notifyOrderManager.notify(NOTIFICATION_ORDER_ID,orderNotification);
+                break;
+        }
+    }
+
+    private void createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,name,importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
