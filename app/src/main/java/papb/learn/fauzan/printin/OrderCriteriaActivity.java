@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import papb.learn.fauzan.printin.adapter.OrderCriteriaAdapter;
 import papb.learn.fauzan.printin.model.OrderCriteriaModel;
+import papb.learn.fauzan.printin.model.UploadFileModel;
 
 public class OrderCriteriaActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView  rvOrder;
@@ -22,6 +23,8 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
 
     private Button btn_save_criteria;
 
+    private ArrayList<UploadFileModel> uploadFileModels = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,8 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
         btn_save_criteria = findViewById(R.id.btn_simpan_kriteria);
 
         btn_save_criteria.setOnClickListener(this);
+
+        uploadFileModels = (ArrayList<UploadFileModel>) getIntent().getSerializableExtra("listFile");
 
         showListOrder();
     }
@@ -47,10 +52,11 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
 
     private ArrayList<OrderCriteriaModel> initializeData(){
         ArrayList<OrderCriteriaModel> orderCriteriaModels = new ArrayList<>();
-        OrderCriteriaModel orderTest1 = new OrderCriteriaModel("Laporan Sisop","a","a","a","a",true,true);
-        OrderCriteriaModel orderTest2 = new OrderCriteriaModel("Proposal Skripsi","a","a","a","a",false,true);
-        orderCriteriaModels.add(orderTest1);
-        orderCriteriaModels.add(orderTest2);
+        for(int i = 0; i < uploadFileModels.size(); i++){
+            OrderCriteriaModel model = new OrderCriteriaModel();
+            model.setFileName(uploadFileModels.get(i).getNamaFile());
+            orderCriteriaModels.add(model);
+        }
 
         return orderCriteriaModels;
     }

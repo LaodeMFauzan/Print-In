@@ -2,7 +2,9 @@ package papb.learn.fauzan.printin.model;
 
 import android.net.Uri;
 
-public class UploadFileModel {
+import java.io.Serializable;
+
+public class UploadFileModel implements Serializable {
     private String namaFile,tipeFile,ukuranFile;
 
     Uri uriFile;

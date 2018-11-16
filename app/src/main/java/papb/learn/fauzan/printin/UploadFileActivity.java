@@ -2,6 +2,7 @@ package papb.learn.fauzan.printin;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -116,6 +117,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btn_simpan_file:
                 Intent toCriteriaActivity = new Intent(this,OrderCriteriaActivity.class);
+                toCriteriaActivity.putExtra("listFile",uploadFileModels);
                 startActivity(toCriteriaActivity);
                 break;
         }
@@ -190,14 +192,23 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void uploadSingleFile(UploadFileModel fileModel,Intent data){
-        pdfUri = new Uri[1];
-        fileModel = new UploadFileModel();
-        Uri pdfUriSingle =  data.getData();
-        String namaFile = getFileName(data.getData());
-        fileModel.setUkuranFile(String.valueOf(new File(data.getData().getPath()).length()));
-        fileModel.setTipeFile(namaFile.substring(namaFile.lastIndexOf(".")));
-        uploadFileModels.add(fileModel);
-        pdfUri[0] = pdfUriSingle;
+        try {
+            pdfUri = new Uri[1];
+            fileModel = new UploadFileModel();
+            Uri pdfUriSingle = data.getData();
+            String namaFile = getFileName(data.getData());
+            fileModel.setNamaFile(namaFile);
+
+            ContentResolver cr = this.getContentResolver();
+            String tipeFile = cr.getType(data.getData());
+            fileModel.setTipeFile(tipeFile.substring(tipeFile.lastIndexOf("/")));
+
+            fileModel.setUkuranFile(String.valueOf(new File(data.getData().getPath()).length()));
+            uploadFileModels.add(fileModel);
+            pdfUri[0] = pdfUriSingle;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -227,8 +238,6 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             Toast.makeText(UploadFileActivity.this,"please provide information...",Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     public String getFileName(Uri uri){
         String result = null;
