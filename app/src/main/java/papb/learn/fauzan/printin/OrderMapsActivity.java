@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONException;
@@ -43,10 +45,11 @@ import papb.learn.fauzan.printin.parser.JSONParserTask;
 public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
-    private LatLng delhi = new LatLng(28.6139, 77.2090);
-    private LatLng chandigarh = new LatLng(30.7333, 76.7794);
+    private LatLng chandigarh = new LatLng(-7.9576019, 112.606947);
+    private LatLng delhi = new LatLng(-7.9471291, 112.613251);
 
     private Button btn_simpan_lokasi_kirim;
+    private TextView tv_nilai_jarak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +66,17 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onPlaceSelected(Place place) {
                 mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
                 mMap.addMarker(new MarkerOptions().position(place.getLatLng()).
                         title(place.getName().toString()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
+
+                calculateDistance(delhi, place.getLatLng());
+                Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                        .clickable(true)
+                        .add(
+                                delhi, chandigarh));
             }
 
             @Override
@@ -75,8 +85,27 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
+
+
         btn_simpan_lokasi_kirim = findViewById(R.id.btn_simpan_lokasi_kirim);
         btn_simpan_lokasi_kirim.setOnClickListener(this);
+        tv_nilai_jarak = findViewById(R.id.tv_nilai_jarak);
+    }
+
+    public double calculateDistance(LatLng delhi, LatLng place){
+        Location delhi_location = new Location("Print-In");
+        delhi_location.setLatitude(delhi.latitude);
+        delhi_location.setLongitude(delhi.longitude);
+
+        Location your_location = new Location("You");
+        your_location.setLatitude(place.latitude);
+        your_location.setLongitude(place.longitude);
+
+        double distance = (delhi_location.distanceTo(your_location))* 0.000621371 ;
+
+        tv_nilai_jarak.setText(String.valueOf(distance));
+
+        return distance;
     }
 
     @Override
@@ -154,8 +183,40 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.addMarker(new MarkerOptions().position(chandigarh).title("Chandigarh"));
-        mMap.addMarker(new MarkerOptions().position(delhi).title("Delhi"));
+        mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(delhi));
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                // Creating a marker
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                // Setting the position for the marker
+                markerOptions.position(latLng);
+
+                // Setting the title for the marker.
+                // This will be displayed on taping the marker
+                markerOptions.title("You");
+
+                // Clears the previously touched position
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
+
+                // Animating to the touched position
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                // Placing a marker on the touched position
+                mMap.addMarker(markerOptions);
+
+                calculateDistance(delhi, latLng);
+                Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                        .clickable(true)
+                        .add(
+                                delhi, latLng));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            }
+        });
 
         String str_origin = "origin=" + delhi.latitude + "," + delhi.longitude;
         String str_dest = "destination=" + chandigarh.latitude + "," + chandigarh.longitude;
@@ -167,29 +228,13 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         Log.d("onMapClick", url.toString());
         FetchUrl FetchUrl = new FetchUrl();
         FetchUrl.execute(url);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(delhi));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(7));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chandigarh, 15));
 
-        Location delhi_location = new Location("Delhi");
-        delhi_location.setLatitude(delhi.latitude);
-        delhi_location.setLongitude(delhi.longitude);
-
-        Location chandigarh_location = new Location("Chandigarh");
-        chandigarh_location.setLatitude(chandigarh.latitude);
-        chandigarh_location.setLongitude(chandigarh.longitude);
-
-        double distance = (delhi_location.distanceTo(chandigarh_location))* 0.000621371 ;
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Info");
-        alertDialog.setMessage("Distance between these two location is : "+distance +" miles");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+        calculateDistance(delhi, chandigarh);
+        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+                        delhi, chandigarh));
     }
 
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
