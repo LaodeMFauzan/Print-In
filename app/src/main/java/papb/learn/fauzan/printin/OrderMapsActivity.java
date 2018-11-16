@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONException;
@@ -72,6 +73,10 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
 
                 calculateDistance(delhi, place.getLatLng());
+                Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                        .clickable(true)
+                        .add(
+                                delhi, chandigarh));
             }
 
             @Override
@@ -87,7 +92,7 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         tv_nilai_jarak = findViewById(R.id.tv_nilai_jarak);
     }
 
-    public void calculateDistance(LatLng delhi, LatLng place){
+    public double calculateDistance(LatLng delhi, LatLng place){
         Location delhi_location = new Location("Print-In");
         delhi_location.setLatitude(delhi.latitude);
         delhi_location.setLongitude(delhi.longitude);
@@ -99,6 +104,8 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         double distance = (delhi_location.distanceTo(your_location))* 0.000621371 ;
 
         tv_nilai_jarak.setText(String.valueOf(distance));
+
+        return distance;
     }
 
     @Override
@@ -203,6 +210,11 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 mMap.addMarker(markerOptions);
 
                 calculateDistance(delhi, latLng);
+                Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                        .clickable(true)
+                        .add(
+                                delhi, latLng));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             }
         });
 
@@ -216,31 +228,13 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         Log.d("onMapClick", url.toString());
         FetchUrl FetchUrl = new FetchUrl();
         FetchUrl.execute(url);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(delhi));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(7));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chandigarh, 15));
 
-        Location delhi_location = new Location("Print-In");
-        delhi_location.setLatitude(delhi.latitude);
-        delhi_location.setLongitude(delhi.longitude);
-
-        Location chandigarh_location = new Location("Chandigarh");
-        chandigarh_location.setLatitude(chandigarh.latitude);
-        chandigarh_location.setLongitude(chandigarh.longitude);
-
-        double distance = (delhi_location.distanceTo(chandigarh_location))* 0.000621371 ;
-
-        tv_nilai_jarak.setText(String.valueOf(distance));
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Info");
-        alertDialog.setMessage("Distance between these two location is : "+distance +" miles");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+        calculateDistance(delhi, chandigarh);
+        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+                        delhi, chandigarh));
     }
 
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
