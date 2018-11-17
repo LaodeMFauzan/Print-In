@@ -39,4 +39,6 @@
     <string name="channel_description">PrintIn Notification Channel</string>
     <string name="order_diproses">Your order has been processed</string>
     <string name="tekan_lihat_order">Click to see your order</string>
+    <string name="all_page">Semua halman</string>
+    <string name="num_page">Halaman</string>
 </resources>
