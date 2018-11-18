@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,8 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
     private NotificationManager notifyOrderManager;
     private static final int NOTIFICATION_ORDER_ID = 0;
 
+    private TextView tv_deliv_fee,tv_deliv_adress,tv_deliv_distance;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +44,20 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
 
         createNotificationChannel();
 
+        Intent getFromMap = getIntent();
+
         btn_checkout_order = findViewById(R.id.btn_checkout_order);
         btn_checkout_order.setOnClickListener(this);
 
+        tv_deliv_adress = findViewById(R.id.tv_shipping_adress);
+        tv_deliv_distance = findViewById(R.id.tv_adress_distance);
+        tv_deliv_fee = findViewById(R.id.tv_shipping_fee);
+        tv_deliv_adress.setText(getFromMap.getStringExtra("deliveryAdress"));
+        tv_deliv_distance.setText(getFromMap.getStringExtra("deliveryDistance"));
+        tv_deliv_fee.setText(getFromMap.getStringExtra("deliveryFee"));
+
         notifyOrderManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
 
         showListOrderSummary();
     }

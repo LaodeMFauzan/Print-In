@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
     private Button btn_save_criteria;
 
     private ArrayList<UploadFileModel> uploadFileModels = new ArrayList<>();
+    ArrayList<OrderCriteriaModel> orderCriteriaModels = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
     }
 
     private ArrayList<OrderCriteriaModel> initializeData(){
-        ArrayList<OrderCriteriaModel> orderCriteriaModels = new ArrayList<>();
         for(int i = 0; i < uploadFileModels.size(); i++){
             OrderCriteriaModel model = new OrderCriteriaModel();
             model.setFileName(uploadFileModels.get(i).getNamaFile());
@@ -66,6 +67,7 @@ public class OrderCriteriaActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()){
             case R.id.btn_simpan_kriteria :
                 Intent toMapDelivery = new Intent(this,OrderMapsActivity.class);
+              //  toMapDelivery.putExtra("listOrder",orderCriteriaModels);
                 startActivity(toMapDelivery);
                 break;
         }

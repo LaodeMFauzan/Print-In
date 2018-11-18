@@ -41,4 +41,5 @@
     <string name="tekan_lihat_order">Click to see your order</string>
     <string name="all_page">Semua halman</string>
     <string name="num_page">Halaman</string>
+    <string name="dist_measure_unit">km</string>
 </resources>

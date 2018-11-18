@@ -1,13 +1,10 @@
 package papb.learn.fauzan.printin;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +24,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -45,11 +41,15 @@ import papb.learn.fauzan.printin.parser.JSONParserTask;
 public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
-    private LatLng chandigarh = new LatLng(-7.9576019, 112.606947);
-    private LatLng delhi = new LatLng(-7.9471291, 112.613251);
+    private LatLng deliveryLatLng = new LatLng(-7.9576019, 112.606947);
+    private LatLng printInOfficeLatLng = new LatLng(-7.9471291, 112.613251);
 
     private Button btn_simpan_lokasi_kirim;
-    private TextView tv_nilai_jarak;
+    private TextView tv_nilai_jarak,tv_nilai_biaya_antar;
+
+    private String deliveryDistance;
+    private String deliveryAdress;
+    private String deliveryFee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +66,18 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onPlaceSelected(Place place) {
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
+                mMap.addMarker(new MarkerOptions().position(printInOfficeLatLng).title("Print-In"));
                 mMap.addMarker(new MarkerOptions().position(place.getLatLng()).
                         title(place.getName().toString()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 12.0f));
 
-                calculateDistance(delhi, place.getLatLng());
+                calculateDistance(printInOfficeLatLng, place.getLatLng());
                 Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
                         .clickable(true)
                         .add(
-                                delhi, chandigarh));
+                                printInOfficeLatLng, deliveryLatLng));
+                deliveryAdress = (String) place.getName();
             }
 
             @Override
@@ -85,27 +86,38 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-
-
         btn_simpan_lokasi_kirim = findViewById(R.id.btn_simpan_lokasi_kirim);
         btn_simpan_lokasi_kirim.setOnClickListener(this);
         tv_nilai_jarak = findViewById(R.id.tv_nilai_jarak);
+        tv_nilai_biaya_antar = findViewById(R.id.tv_nilai_harga_antar);
     }
 
-    public double calculateDistance(LatLng delhi, LatLng place){
-        Location delhi_location = new Location("Print-In");
-        delhi_location.setLatitude(delhi.latitude);
-        delhi_location.setLongitude(delhi.longitude);
+    public String calculateDistance(LatLng delhi, LatLng place){
+        Location printInOffeiceLoc = new Location("Print-In");
+        printInOffeiceLoc.setLatitude(delhi.latitude);
+        printInOffeiceLoc.setLongitude(delhi.longitude);
 
         Location your_location = new Location("You");
         your_location.setLatitude(place.latitude);
         your_location.setLongitude(place.longitude);
 
-        double distance = (delhi_location.distanceTo(your_location))* 0.000621371 ;
+        double distance = (printInOffeiceLoc.distanceTo(your_location)) * 0.000621371 ;
+        String stringDistance = String.format("%.2f", distance)+" "+getString(R.string.dist_measure_unit);
 
-        tv_nilai_jarak.setText(String.valueOf(distance));
+        if(distance <= 2){
+            deliveryFee = "Rp. 2000";
+        } else if(distance < 4){
+            deliveryFee ="Rp. 4000";
+        } else {
+            deliveryFee = "Rp. 5000";
+        }
 
-        return distance;
+        tv_nilai_jarak.setText(stringDistance);
+        tv_nilai_biaya_antar.setText(deliveryFee);
+
+        deliveryDistance = stringDistance;
+
+        return stringDistance;
     }
 
     @Override
@@ -113,6 +125,9 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         switch (view.getId()){
             case R.id.btn_simpan_lokasi_kirim:
                 Intent toOrderSummary = new Intent(this,OrderSummaryActivity.class);
+                toOrderSummary.putExtra("deliveryFee",deliveryFee);
+                toOrderSummary.putExtra("deliveryDistance",deliveryDistance);
+                toOrderSummary.putExtra("deliveryAdress",deliveryAdress);
                 startActivity(toOrderSummary);
                 break;
         }
@@ -182,9 +197,9 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.addMarker(new MarkerOptions().position(chandigarh).title("Chandigarh"));
-        mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(delhi));
+        mMap.addMarker(new MarkerOptions().position(deliveryLatLng).title("Chandigarh"));
+        mMap.addMarker(new MarkerOptions().position(printInOfficeLatLng).title("Print-In"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(printInOfficeLatLng));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -201,7 +216,7 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
                 // Clears the previously touched position
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(delhi).title("Print-In"));
+                mMap.addMarker(new MarkerOptions().position(printInOfficeLatLng).title("Print-In"));
 
                 // Animating to the touched position
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -209,17 +224,17 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
                 // Placing a marker on the touched position
                 mMap.addMarker(markerOptions);
 
-                calculateDistance(delhi, latLng);
+                calculateDistance(printInOfficeLatLng, latLng);
                 Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
                         .clickable(true)
                         .add(
-                                delhi, latLng));
+                                printInOfficeLatLng, latLng));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             }
         });
 
-        String str_origin = "origin=" + delhi.latitude + "," + delhi.longitude;
-        String str_dest = "destination=" + chandigarh.latitude + "," + chandigarh.longitude;
+        String str_origin = "origin=" + printInOfficeLatLng.latitude + "," + printInOfficeLatLng.longitude;
+        String str_dest = "destination=" + deliveryLatLng.latitude + "," + deliveryLatLng.longitude;
         String sensor = "sensor=false";
         String parameters = str_origin + "&" + str_dest + "&" + sensor;
         String output = "json";
@@ -228,13 +243,13 @@ public class OrderMapsActivity extends AppCompatActivity implements OnMapReadyCa
         Log.d("onMapClick", url.toString());
         FetchUrl FetchUrl = new FetchUrl();
         FetchUrl.execute(url);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(chandigarh, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(deliveryLatLng, 15));
 
-        calculateDistance(delhi, chandigarh);
+        calculateDistance(printInOfficeLatLng, deliveryLatLng);
         Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
                 .clickable(true)
                 .add(
-                        delhi, chandigarh));
+                        printInOfficeLatLng, deliveryLatLng));
     }
 
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {

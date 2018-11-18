@@ -65,15 +65,19 @@
             android:id="@+id/et_page_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_is_all_page"
-            android:hint="@string/num_page"
-            />
+            android:hint="@string/num_page" />
 
         <Spinner
             android:id="@+id/sp_paper_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -113,8 +117,7 @@
             app:layout_constraintTop_toBottomOf="@id/sp_bind_type"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/rg_color_choice"
-            app:layout_constraintBottom_toTopOf="@id/sp_back_bind"
-            />
+            app:layout_constraintBottom_toTopOf="@id/sp_back_bind" />
 
         <Spinner
             android:id="@+id/sp_back_bind"
@@ -125,8 +128,7 @@
             app:layout_constraintTop_toBottomOf="@id/sp_front_bind"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/rg_color_choice"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
