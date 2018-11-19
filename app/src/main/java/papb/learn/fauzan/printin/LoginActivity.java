@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_login.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+        //Logout
+//        mAuth.signOut();
     }
 
     @Override

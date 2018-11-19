@@ -1,8 +1,6 @@
 package papb.learn.fauzan.printin;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -85,17 +83,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                pb_register.setVisibility(View.GONE);
-                                Log.d(TAG_SUCCESS_CREATE, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
-                            } else {
-                                pb_register.setVisibility(View.GONE);
-                                Log.w(TAG_FAILED_CREATE, "createUserWithEmail:failure", task.getException());
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
                                 Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                updateUI(null);
+                                Log.i(TAG_FAILED_CREATE, task.getException().toString());
+                                pb_register.setVisibility(View.GONE);
+
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Authentication success.",
+                                        Toast.LENGTH_SHORT).show();
+                                pb_register.setVisibility(View.GONE);
+                                Intent toLoginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(toLoginActivity);
                             }
                         }
                     });
