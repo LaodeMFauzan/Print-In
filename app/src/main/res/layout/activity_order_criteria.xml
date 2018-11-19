@@ -10,10 +10,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_order_criteria"
-            android:scrollbars="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_simpan_kriteria"/>
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@id/btn_simpan_kriteria"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_simpan_kriteria"
