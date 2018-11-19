@@ -18,6 +18,6 @@ public class OrderListActivity extends AppCompatActivity {
     }
 
     private void getOrderFragment(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new OrderFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new EmptyOrderFragment()).commit();
     }
 }

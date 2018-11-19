@@ -3,6 +3,8 @@ package papb.learn.fauzan.printin.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,14 @@ public class FileUploadAdapter extends RecyclerView.Adapter<FileUploadAdapter.Vi
         holder.tv_file_name.setText(fileModelList.get(position).getNamaFile());
         holder.tv_type_file.setText(fileModelList.get(position).getTipeFile());
         holder.tv_file_size.setText(fileModelList.get(position).getUkuranFile());
+
+        Drawable ic_file_word = ContextCompat.getDrawable(context,R.drawable.ic_insert_drive_file_black_24dp);
+        Drawable ic_file_pdf = ContextCompat.getDrawable(context,R.drawable.ic_picture_as_pdf_black_24dp);
+        if(fileModelList.get(position).getTipeFile().contains("pdf")){
+            holder.iv_img_file.setImageDrawable(ic_file_pdf);
+        } else {
+            holder.iv_img_file.setImageDrawable(ic_file_word);
+        }
     }
 
     @Override

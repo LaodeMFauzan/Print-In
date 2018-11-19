@@ -5,9 +5,12 @@ import android.net.Uri;
 import java.io.Serializable;
 
 public class UploadFileModel implements Serializable {
-    private String namaFile,tipeFile,ukuranFile;
+    private String namaFile;
+    private String tipeFile;
+    private String ukuranFile;
+    private String iconFile;
 
-    Uri uriFile;
+    private Uri uriFile;
 
     public UploadFileModel() {
     }
@@ -48,5 +51,14 @@ public class UploadFileModel implements Serializable {
 
     public void setUriFile(Uri uriFile) {
         this.uriFile = uriFile;
+    }
+
+
+    public String getIconFile() {
+        return iconFile;
+    }
+
+    public void setIconFile(String iconFile) {
+        this.iconFile = iconFile;
     }
 }

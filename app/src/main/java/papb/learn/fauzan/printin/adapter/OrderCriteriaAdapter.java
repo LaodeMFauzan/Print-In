@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import papb.learn.fauzan.printin.R;
 import papb.learn.fauzan.printin.model.OrderCriteriaModel;
 
-public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdapter.ViewHolder> {
+public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdapter.ViewHolder>  {
 
     private ArrayList<OrderCriteriaModel> orderCriteriaModelList;
     private Context context;
@@ -35,6 +36,10 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
     public OrderCriteriaAdapter(ArrayList<OrderCriteriaModel> dataSet,Context context) {
         this.orderCriteriaModelList = dataSet;
         this.context = context;
+    }
+
+    public ArrayList<OrderCriteriaModel> getCriteria(){
+        return this.orderCriteriaModelList;
     }
 
     @Override
@@ -66,6 +71,7 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
         holder.sp_bind_type.setAdapter(bind_type_adapter);
         holder.sp_front_bind.setAdapter(front_color_adapter);
         holder.sp_back_bind.setAdapter(back_color_adapter);
+
     }
 
 
@@ -102,7 +108,9 @@ public class OrderCriteriaAdapter extends RecyclerView.Adapter<OrderCriteriaAdap
 
         @Override
         public void onClick(View view) {
-
+            int adapterPosition = getAdapterPosition();
+            orderCriteriaModelList.get(adapterPosition).setBinded(cb_bind.isChecked());
+            orderCriteriaModelList.get(adapterPosition).setColored(rb_colored.isChecked());
         }
     }
 }

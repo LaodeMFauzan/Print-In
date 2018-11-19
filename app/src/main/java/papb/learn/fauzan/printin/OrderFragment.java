@@ -24,12 +24,7 @@ public class OrderFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         myFab = view.findViewById(R.id.floatingActionButton);
-//        myFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Snackbar", Snackbar.LENGTH_LONG).show();
-//            }
-//        });
+
         myFab.setOnClickListener(this);
     }
 

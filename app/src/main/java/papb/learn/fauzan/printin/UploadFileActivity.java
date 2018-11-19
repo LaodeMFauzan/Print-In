@@ -165,6 +165,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(UploadFileActivity.this, "Uploading file "+ indexFile +" please wait..", Toast.LENGTH_LONG).show();
                     int currentProgress = (int) (100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                     pb_upload_file.setProgress(currentProgress);
                 }
