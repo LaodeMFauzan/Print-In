@@ -6,8 +6,8 @@
 
     <color name="blackColor">#000</color>
     <color name="whiteColor">#fff</color>
-    <color name="bg_tv_link">#00aced</color>
-    <color name="btn_login">#FF0048</color>
+    <color name="bg_tv_link">#000000</color>
+    <color name="btn_login">#252C41</color>
     <color name="btn_register">#FF0048</color>
     <color name="background_all">#DBDBDB</color>
     <color name="custom_et">#EBEBEB</color>
