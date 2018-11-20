@@ -85,9 +85,10 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_checkout_order:
-                Intent intent = new Intent(this,OrderListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+                Intent toOrderList = new Intent(this,OrderListActivity.class);
+                toOrderList.putExtra("REQUEST_CODE","show_list_order");
+                toOrderList.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,0,toOrderList,PendingIntent.FLAG_UPDATE_CURRENT);
 
                 notifyOrderBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
                         .setContentTitle(getString(R.string.order_diproses))
@@ -99,6 +100,9 @@ public class OrderSummaryActivity extends AppCompatActivity implements View.OnCl
 
                 Notification orderNotification = notifyOrderBuilder.build();
                 notifyOrderManager.notify(NOTIFICATION_ORDER_ID,orderNotification);
+
+
+                startActivity(toOrderList);
                 break;
         }
     }

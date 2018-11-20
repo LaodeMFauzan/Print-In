@@ -43,7 +43,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="Dokumen"
+            android:text="@string/file_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
@@ -56,7 +56,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:text="Tipe File"
+            android:text="@string/tipe_file"
             app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_upload_nama_file" />
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:text="Ukuran File"
+            android:text="@string/ukuran_file"
             app:layout_constraintStart_toEndOf="@+id/iv_file_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_tipe_file" />
     </android.support.constraint.ConstraintLayout>

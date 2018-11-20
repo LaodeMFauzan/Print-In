@@ -3,20 +3,33 @@ package papb.learn.fauzan.printin.model;
 import java.util.Date;
 
 public class OrderModel {
-    private String dokumen;
     private String tanggal;
+    private String invoiceId;
+    private String statusOrder;
 
-    public OrderModel(String dokumen, String tanggal) {
-        this.dokumen = dokumen;
+    public OrderModel() {
+    }
+
+    public OrderModel(String invoiceId, String statusOrder,String tanggal) {
         this.tanggal = tanggal;
+        this.invoiceId = invoiceId;
+        this.statusOrder = statusOrder;
     }
 
-    public String getDokumen() {
-        return dokumen;
+    public String getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setDokumen(String dokumen) {
-        this.dokumen = dokumen;
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getStatusOrder() {
+        return statusOrder;
+    }
+
+    public void setStatusOrder(String statusOrder) {
+        this.statusOrder = statusOrder;
     }
 
     public String getTanggal() {

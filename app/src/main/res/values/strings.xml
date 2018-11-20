@@ -42,4 +42,9 @@
     <string name="all_page">Semua halaman</string>
     <string name="num_page">Halaman</string>
     <string name="dist_measure_unit">km</string>
+    <string name="invoice_id">#001PRINTIN</string>
+    <string name="status_proses">On Process</string>
+    <string name="tgl_order">20 November 2018</string>
+    <string name="tipe_file">Tipe File</string>
+    <string name="ukuran_file">File size</string>
 </resources>

@@ -46,8 +46,8 @@ public class FileUploadAdapter extends RecyclerView.Adapter<FileUploadAdapter.Vi
         holder.tv_type_file.setText(fileModelList.get(position).getTipeFile());
         holder.tv_file_size.setText(fileModelList.get(position).getUkuranFile());
 
-        Drawable ic_file_word = ContextCompat.getDrawable(context,R.drawable.ic_insert_drive_file_black_24dp);
-        Drawable ic_file_pdf = ContextCompat.getDrawable(context,R.drawable.ic_picture_as_pdf_black_24dp);
+        Drawable ic_file_word = ContextCompat.getDrawable(context,R.drawable.ic_icons8_microsoft_word);
+        Drawable ic_file_pdf = ContextCompat.getDrawable(context,R.drawable.ic_pdf_file_format_symbol);
         if(fileModelList.get(position).getTipeFile().contains("pdf")){
             holder.iv_img_file.setImageDrawable(ic_file_pdf);
         } else {
